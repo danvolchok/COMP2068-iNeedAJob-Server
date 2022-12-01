@@ -14,5 +14,16 @@ router.get('/', (req, res) => {
     })
 })
 
+// POST: /api/employer => create a new employer
+router.post('/', (req, res) => {
+    Employer.create(req.body, (err, employer) => {
+        if (err) {
+            return res.json(err).status(400)
+        }
+        else {
+            return res.json(employer).status(201)
+        }
+    })
+})
 
 module.exports = router
