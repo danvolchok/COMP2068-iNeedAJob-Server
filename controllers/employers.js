@@ -18,12 +18,37 @@ router.get('/', (req, res) => {
 router.post('/', (req, res) => {
     Employer.create(req.body, (err, employer) => {
         if (err) {
-            return res.json(err).status(400)
+            return res.json(err).status(400) // bad request
         }
         else {
-            return res.json(employer).status(201)
+            return res.json(employer).status(201) // new resource created
         }
     })
 })
+
+// DELETE: /api/employer/:id => delete an employer
+router.delete('/:_id', (req, res) => {
+    Employer.deleteOne({ _id: req.params._id }, (err, employer) => {
+        if (err) {
+            return res.json(err).status(400) // bad request
+        }
+        else {
+            res.json(employer).status(200)
+        }
+    })
+})
+
+// PUT: /api/employer/:id => update an employer
+router.put('/:_id', (req, res) => {
+    Employer.findOneAndUpdate({ _id: req.params._id }, req.body, (err, employer) => {
+        if (err) {
+            return res.json(err).status(400) // bad request
+        }
+        else {
+            res.json(employer).status(202) // accepted
+        }
+    })
+})
+
 
 module.exports = router
